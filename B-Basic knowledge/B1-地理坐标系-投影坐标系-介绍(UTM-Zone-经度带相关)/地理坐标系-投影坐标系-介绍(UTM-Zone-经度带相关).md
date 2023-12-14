@@ -72,21 +72,96 @@
 
 
 
+# 【重要】不同坐标系的EPSG代码介绍
+
+EPSG的英文全称是European Petroleum Survey Group，中文名称为欧洲石油调查组织。这个组织成立于1986年，2005年并入IOGP(InternationalAssociation of Oil & Gas Producers)，中文名称为国际油气生产者协会。
+
+EPSG对世界的每一个地方都制定了地图，但是由于坐标系不同，所以地图也各不相同。
+
+## **中国地图**
+
+比如对于中国来讲，以地球的几何球心为中心的地图就是EPSG:4479，以地球的椭球焦点为中心就是EPSG:4480，此外还有EPSG:4490，因为选择不同的座标系对于油气勘探的成本至关重要，所以有不同的座标系。 
+
+- **EPSG：4490（CGCS2000）**
+  我国的GPS系统-北斗导航系统以及国家发行的“天地图”，用的是这一套地理坐标系统，中文名“中国国家2000地理坐标系统”，英文全称翻译名“中国大地坐标系2000”，英文名 China Geodetic Coordinate System 2000。
+
+- **北京54、西安80**【1954 ，1980】
+  是我国已经逐渐停止使用的两个地理坐标系统。北京54坐标系统WKID是4214，西安80坐标系统的WKID是4610。
+
+- **GCJ-02坐标系**
+
+  GCJ-02是由中国国家测绘局（G表示Guojia国家，C表示Cehui测绘，J表示Ju局）制订的地理信息系统的坐标系统。它是一种对经纬度数据的加密算法，即加入随机的偏差。国内出版的各种地图系统（包括电子形式），必须至少采用GCJ-02对地理位置进行首次加密。
+
+##  世界地图
+
+- **EPSG:4326 (WGS84)**【地理坐标系】
+
+  在世界地图方面，EPSG:4326是比较著名的一个，加密前的高德、百度用的也是WGS84，因为1984年由美国军方主导的GPS系统就是在用它，它还有一个名气更大的别名叫作WGS84，WGS(World Geodetic System)是世界大地测量系统的意思，由于是1984年定义的，所以叫WGS84，之前的版本还有WGS72、WGS66、WGS60。
+
+- **EPSG:3857(墨卡托投影|UTM)**【投影坐标系】
+
+  另一个比较知名的编码是EPSG:3857，这也是一张世界地图，目前主要是各大互联网地图公司以它为基准，例如Google地图，Microsoft地图都在用它。
+
+注1：所有这些EPSG编码的具体含义都可以在这个[网站][https://epsg.io/]【https://epsg.io/】上查到。
+
+具体EPSG编码查询网址http://epsg.io/3857
+
+注2：可参考文档
+
+https://www.cnblogs.com/E7868A/p/11460865.html
+
+https://www.cnblogs.com/onsummer/p/7451128.html
+
+------------------------------------------------
+
+原文链接：https://blog.csdn.net/L_Andy/article/details/79882898
+
+## arcgis软件中示例：
+
+![image-20231215030247782](./%E5%9C%B0%E7%90%86%E5%9D%90%E6%A0%87%E7%B3%BB-%E6%8A%95%E5%BD%B1%E5%9D%90%E6%A0%87%E7%B3%BB-%E4%BB%8B%E7%BB%8D(UTM-Zone-%E7%BB%8F%E5%BA%A6%E5%B8%A6%E7%9B%B8%E5%85%B3).assets/image-20231215030247782.png)
 
 
 
+## WKID与EPSG的区别
+
+WKID (Well-Known ID) 和 EPSG (European Petroleum Survey Group) 代码都是用来唯一标识地理空间参考系统的。它们通常用于GIS数据和软件中，以确保地理数据在不同的系统和应用程序之间正确传输和解释。
+
+- **EPSG代码**：EPSG代码是由国际油气生产者协会维护的地理坐标参考系统的标准编号。每一个EPSG代码对应一个唯一的坐标系统，这些代码被广泛接受并在全球范围内使用。例如，WGS 84坐标系统的EPSG代码是4326。
+- **WKID**：WKID是一个通用术语，它指的是用于识别空间参考系统的任何“已知”的ID。虽然WKID并不是一个由特定组织维护的标准集合，但是在实际使用中，ArcGIS软件中的WKID通常是与EPSG代码相同的。不过，ArcGIS也可能使用自己的一套ID体系，这些ID可能不在EPSG注册表中。
+
+总的来说，尽管在许多情况下WKID可能会直接引用EPSG代码，但WKID是一个更广泛的概念，它可以包括除了EPSG代码之外的其他类型的空间参考系统标识符。当在特定的GIS软件环境中工作时，需要确保所使用的WKID与期望的空间参考系统相匹配。如果你在ArcGIS环境中工作，那么WKID通常会和EPSG代码等价。在其他一些系统或软件中，WKID可能会有不同的来源或者编号系统。
 
 
 
+#  【重要】UTM投影坐标系（EPSG:3857）及中央经线（Central Meridian）的含义
 
 
 
-
-#  【重要】中央经线（Central Meridian）的含义
-
-
+## UTM投影坐标系（EPSG:3857）
 
 UTM（Universal Transverse Mercator）投影系统是一种地图投影方法，将地球表面分割成一系列6度经度宽的纵带。每一条纵带被称作一个UTM区，并且每个区都有一个中央经线（Central Meridian）。
+
+### 墨卡托投影原理图
+
+![动图](./%E4%B8%AD%E5%A4%AE%E7%BB%8F%E7%BA%BF%EF%BC%88Central%20Meridian%EF%BC%89%E8%A7%A3%E9%87%8A.assets/e8d3e27e73a811b364b0f8141fee78a0_b.webp)
+
+“WGS 1984”坐标系的墨卡托投影分度带（UTM ZONE）选择方法如下：
+
+（1） 北半球地区，选择最后字母为“N”的带；
+（2） 可根据公式计算，带数=（经度整数位/6）的整数部分+31 如：江西省南昌新建县某调查单元经度范围115°35′20″—115°36′00″， 带数=115/6+31=50，选50N，即**WGS 1984 UTM ZONE 50N**。
+
+### 中国UTM投影带号
+
+中国国境所跨UTM带号为43-53 我国的疆域范围：
+最西端 北纬39度15分、东经73度33分 最北端 北纬53度33.5分 东经124度27分 最南点，处北纬3°51′，东经112°16′ 最东端 北纬47度27.5分 东经134度46.5分
+
+### UTM投影带号计算
+
+如WGS_1984_UTM_Zone_49N，这个带号49的计算方法：
+49：从180度经度向东,每6度为一投影带,第49个投影带
+49=（114+180）/6，这个114为49投影带的最大经线
+
+## 中央经线（Central Meridian）
 
 中央经线是**每个UTM区的参考经线**，是该区的**纵向中心**。中央经线的作用是作为该UTM区的坐标基准。在UTM投影中，中央经线的**东坐标被定义为500,000米**，以确保该区域内的所有点在投影后都有正的东坐标值。这样的设计是为了避免使用负数坐标。
 
@@ -96,56 +171,26 @@ UTM（Universal Transverse Mercator）投影系统是一种地图投影方法，
 
 
 
+### 中央经线（Central Meridian）的西侧坐标是怎么定义的？
 
+> UTM的“false easting”值为500km，而南半球UTM的“false northing”为10000km.。
 
-## 关于 UTM投影 的  中央经线和经度带划分 可以给我一个资料链接吗
+- **东西关系**
 
-
-
-ChatGPT ：我无法直接浏览互联网或提供实时链接，但我可以建议你查找一些关键词或在特定网站上进行搜索。
-
-你可以在以下网站上查找关于UTM投影的中央经线和经度带划分的信息：
-
-1. **USGS（United States Geological Survey）**
-
-   - 网站链接: [USGS](https://www.usgs.gov/)
-   - 搜索关键词: UTM projection Central Meridian Zone
-
-2. **Wikipedia**
-
-   - 页面链接: [Universal Transverse Mercator coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system)
-
-   - 这个页面详细解释了UTM坐标系统的工作原理，包括中央经线和经度带的划分。
-
-     > ![undefined](./%E4%B8%AD%E5%A4%AE%E7%BB%8F%E7%BA%BF%EF%BC%88Central%20Meridian%EF%BC%89%E8%A7%A3%E9%87%8A.assets/800px-Modified_UTM_Zones.png)
-     >
-     > Universal Transverse Mercator (UTM) Grid Zones 31N thru 37N differ from the standard 6° wide by 84° for the northern hemisphere, in part to accommodate the southern half of the Kingdom of Norway. For more on its history, see Clifford J. Mugnier's article on Grids & Datums of The Kingdom of Norway that appeared in the October 1999 issue of PE&RS http://www.asprs.org/a/resources/grids/10-99-norway.pdf
-
-3. **ESRI（Environmental Systems Research Institute）**
-
-   - 网站链接: [ESRI](https://www.esri.com/)
-   - 搜索关键词: UTM projection Central Meridian Zone
-
-4. **NOAA（National Oceanic and Atmospheric Administration）**
-
-   - 网站链接: [NOAA](https://www.noaa.gov/)
-   - 搜索关键词: UTM projection explanation
-
-请记住，在使用这些资源时，确保引用和依赖准确和可靠的信息源。
-
-
-
-## 问题：中央经线（Central Meridian）的西侧坐标是怎么定义的？
-
-
-
-在UTM（Universal Transverse Mercator）投影中，每个区域（6度经度宽）都有一个**中央经线（Central Meridian）**。这个中央经线的坐标被设定为500,000米（假东ing）。这是为了保证在该投影区域中的任何点都会有一个正的东坐标值。
+在UTM（Universal Transverse Mercator）投影中，每个区域（6度经度宽）都有一个**中央经线（Central Meridian）**。这个中央经线的坐标被设定为500,000米（500千米）。这是为了保证在该投影区域中的任何点都会有一个**正的东坐标值**。
 
 对于中央经线以西的区域，由于中央经线已经被赋予了500,000米的坐标值，所以这些区域的坐标值会相对较小，但仍然是正值。例如，如果一个点位于中央经线以西100,000米的位置，那么**这个点的东坐标将是400,000米（500,000米 - 100,000米）**。这就确保了UTM投影中所有的坐标值都是正的，从而避免了使用负坐标值，简化了地图的使用和导航。
 
+- **南半球—北半球的区别**
 
+赤道上的点在北半球的 Y 值为 0 米。
 
-## 示意图
+赤道上的点在南半球的 Y 值为 10,000,000 米（1万公里）。
+
+在 UTM（Universal Transverse Mercator）坐标系中，南半球的处理方式与北半球不同。在南半球，UTM 坐标系统为了避免负数的 Y 值，采用了一个偏移量。这个偏移量通常是 10,000,000 米（或者说 10,000 公里）。
+例如，如果在南半球的某个位置，它距离赤道向南 500,000 米（或 500 公里），那么这个位置的 Y 值将是 9,500,000 米（因为 10,000,000 米 - 500,000 米 = 9,500,000 米）。这种设计有效地避免了南半球的负数坐标，使整个 UTM 系统在全球范围内具有一致性。
+
+### 中央经线的 示意图
 
 ![image-20231021151956523](./%E4%B8%AD%E5%A4%AE%E7%BB%8F%E7%BA%BF%EF%BC%88Central%20Meridian%EF%BC%89%E8%A7%A3%E9%87%8A.assets/image-20231021151956523.png)
 
@@ -161,15 +206,13 @@ ChatGPT ：我无法直接浏览互联网或提供实时链接，但我可以建
 
 > https://gisgeography.com/utm-universal-transverse-mercator-projection/?utm_source=ReviveOldPost&utm_medium=social&utm_campaign=ReviveOldPost
 >
-> https://gisgeography.com/utm-universal-transverse-mercator-projection/?utm_source=ReviveOldPost&utm_medium=social&utm_campaign=ReviveOldPost
->
 > ![image-20231103215129855](./%E4%B8%AD%E5%A4%AE%E7%BB%8F%E7%BA%BF%EF%BC%88Central%20Meridian%EF%BC%89%E8%A7%A3%E9%87%8A.assets/image-20231103215129855.png)
 
 
 
 
 
-# 【重要】 自动驾驶领域坐标系介绍
+# 【重要】 自动驾驶相关坐标系的介绍
 
 > 参考 【星火计划2.0】：https://www.bilibili.com/video/BV1Ze4y167Q6/?spm_id_from=333.999.0.0
 
@@ -186,24 +229,56 @@ ChatGPT ：我无法直接浏览互联网或提供实时链接，但我可以建
   > - x轴：与地理的正东方向对应，单位，米；中央经线的x值为500Km。
   >
   > - y轴：与地理的正北方向对应，单位，米；对于北半球赤道纬度为0，对应Y值为0；所以也叫东北天（ENU）坐标系。
-  >   > 赤道上的点在北半球的 Y 值为 0 米。
-  >   > 赤道上的点在南半球的 Y 值为 10,000,000 米。
-  >   > 在 UTM（Universal Transverse Mercator）坐标系中，南半球的处理方式与北半球不同。在南半球，UTM 坐标系统为了避免负数的 Y 值，采用了一个偏移量。这个偏移量通常是 10,000,000 米（或者说 10,000 公里）。
-  >   > 例如，如果在南半球的某个位置，它距离赤道向南 500,000 米（或 500 公里），那么这个位置的 Y 值将是 9,500,000 米（因为 10,000,000 米 - 500,000 米 = 9,500,000 米）。这种设计有效地避免了南半球的负数坐标，使整个 UTM 系统在全球范围内具有一致性。
-  >
+  >   
   > - z轴：海拔高度信息，水平面为0米；
-  >
+  > 
   > - 航向：表示车辆、waypoint、dubins_pose等含有位姿信息的航向统一定义为东偏北, 范围为[0,2pi)，单位，rad； 
-
+  
 - 车辆坐标系\车体坐标系：右前天（RFU）坐标系；
 
 
 
+# 【重要】不同设备\不同代码环境如何保证WGS84地理坐标转化投影坐标的一致性？
+
+>  WGS_1984地理坐标系转UTM投影坐标系通常使用 Proj 库（目前更新到了proj-9.3.1）：
+>
+> https://proj.org/en/9.3/download.html
+
+要确保在不同设备和不同代码环境下 WGS84 地理坐标转换到投影坐标的一致性，需要注意以下几个关键点：
+
+1. **使用相同的库版本**：
+   - 在所有设备和环境中使用相同版本的 Proj 库（或其绑定）。不同版本的库可能会有微小的实现差异。
+2. **统一的坐标参考系统**：
+   - 确保使用的 WGS84 和目标投影坐标系统的定义完全一致。最佳做法是使用 **EPSG 代码**指定坐标系统，这是国际公认的标准。
+
+> 
+
+1. **精度和数据类型**：
+   - 使用足够的浮点数精度。例如，在 C++ 中使用 `double` 而不是 `float`，以保证高精度计算。
+   - 确保在进行数值计算和传输时不会丢失精度。
+2. **传输格式**：
+   - 当通过网络或文件传输坐标数据时，确保数据的格式化和解析方法一致。例如，使用字符串而不是二进制格式可能更容易保证精确的解析。
+3. **同步转换参数**：
+   - 如果转换涉及额外的参数（如投影参数、椭球模型参数等），这些参数必须在所有系统中同步。
+4. **环境配置**：
+   - 相关的地理信息系统环境配置必须一致，比如地图的 datum shifts 和任何其他相关的配置。
+5. **测试和验证**：
+   - 在部署到不同的环境之前，应该进行彻底的测试，包括转换的端到端验证。
+   - 使用已知的坐标点进行转换测试，并验证输出与预期一致。
+6. **处理异常和边界条件**：
+   - 对于地理坐标系统和投影坐标系统的极端和边界条件，确保在不同环境中以相同方式处理它们。
+7. **文档和知识共享**：
+   - 确保有关坐标转换的所有假设、参数和方法都有很好的文档记录，并且对所有使用者和开发者可用。
+8. **避免硬编码**：
+   - 避免硬编码任何可能会变化的参数，比如坐标系统的定义。应该从一个共享的、可靠的源获取这些参数。
+
+通过遵守上述指南，可以最大限度地减少不同设备和代码环境中坐标转换的不一致性。
 
 
 
 
-# 地理坐标系与投影坐标系-2
+
+# 【不重要】地理坐标系与投影坐标系-2
 
 > https://www.bilibili.com/read/cv16776101/
 
@@ -225,6 +300,7 @@ ChatGPT ：我无法直接浏览互联网或提供实时链接，但我可以建
 
 
 ArcGIS 中“地理坐标系（GCS）”与“投影坐标系（PCS）”的联系
+
  为什么要进行投影﹖
 
 地理坐标为球面坐标，单位为度，不方便进行距离、方位、面积等参数的量算（例如如何在地理坐标系表示的地 图中计算一块土地的面积？或者说如何用经纬度表达一块土地的面积？这是不能表示的，因为一度经度在不同的纬度表示的弧长是不一样的，在赤道附近弧长最长，在两极附近弧长最短）。投影显示效果符合视觉心理，并易于进行距离、方位、面积等量算和各种空间分析。再仔细看相同地区投影前后形状有所变化，当发生面积、角度、长度等的变化，称为形变。为什么会发生图的形变，那是因为地图投影解决由球面向平面的转换，并不能保持平面与球面之间长度（距离）、角度（形状）、面积等方面完全不变（地球是一个球面，而地图必须是一个平面展示的，因此将地球表面展开成地图平面必然会产生裂隙或褶皱（拉伸处理），必须采用一定的数学方法将曲面展成平面，而且使其变形较小）。至今还没有一种完美的地图投影能做到完全没有形变和误差，所以投影方法就和那句话说的一样：没有最好的，只有最适合的。
@@ -259,7 +335,7 @@ Datum: D_WGS_1984
 
 Spheroid:WGS_1984
 
-       Semimajor Axis: 6378137.0
+Semimajor Axis: 6378137.0
 
 Semiminor Axis: 6356752.314245179
 
@@ -376,7 +452,7 @@ https://zhuanlan.zhihu.com/p/34932577 作者：小爽要瘦瘦 https://www.bilib
 
 
 
-# 8. 坐标参考系[](https://www.osgeo.cn/qgisdoc/docs/gentle_gis_introduction/coordinate_reference_systems.html#coordinate-reference-systems)
+# 【不重要】8. 坐标参考系[](https://www.osgeo.cn/qgisdoc/docs/gentle_gis_introduction/coordinate_reference_systems.html#coordinate-reference-systems)
 
 > https://www.osgeo.cn/qgisdoc/docs/gentle_gis_introduction/coordinate_reference_systems.html
 
@@ -528,7 +604,7 @@ First we have to find the **central meridian** (longitude) for the **UTM zone 35
 
 
 
-#  常见的两种地图投影：Gauss-Kruger vs UTM
+#  【不重要】常见的两种地图投影：Gauss-Kruger vs UTM
 
 > https://zhuanlan.zhihu.com/p/659373326
 
@@ -581,6 +657,8 @@ UTM投影带号计算
 如WGS_1984_UTM_Zone_49N，这个带号49的计算方法：
 49：从180度经度向东,每6度为一投影带,第49个投影带
 49=（114+180）/6，这个114为49投影带的最大经线
+
+
 
 ## **3、高斯-克吕格投影与UTM投影异同**
 
